@@ -1,6 +1,6 @@
-package com.company;
+package Threads;
 
-class Producer extends Thread {
+public class Producer extends Thread {
     private Buffer buf;
 
     public Producer(Buffer buf){

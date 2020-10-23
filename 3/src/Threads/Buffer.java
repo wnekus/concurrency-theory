@@ -1,8 +1,8 @@
-package com.company;
+package Threads;
 
 import java.util.LinkedList;
 
-class Buffer {
+public class Buffer {
     LinkedList<Integer> buffer;
     int maxSize;
 
@@ -16,12 +16,11 @@ class Buffer {
             while(buffer.size() >= maxSize){
                 wait();
             }
+            buffer.add(i);
+            notify();
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-
-        buffer.add(i);
-        notify();
     }
 
     public synchronized int get() {
@@ -29,12 +28,12 @@ class Buffer {
             while(buffer.size() == 0){
                 wait();
             }
+            int retVal = buffer.removeFirst();
+            notify();
+            return retVal;
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-
-        int retVal = buffer.removeFirst();
-        notify();
-        return retVal;
+        return -1;
     }
 }
