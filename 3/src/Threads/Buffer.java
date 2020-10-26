@@ -12,28 +12,27 @@ public class Buffer {
     }
 
     public synchronized void put(int i) {
-        try{
-            while(buffer.size() >= maxSize){
+        while(buffer.size() >= maxSize) {
+            try {
                 wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            buffer.add(i);
-            notify();
-        } catch (InterruptedException e){
-            e.printStackTrace();
         }
+        buffer.add(i);
+        notify();
     }
 
     public synchronized int get() {
-        try{
-            while(buffer.size() == 0){
+        while(buffer.size() == 0){
+            try{
                 wait();
+            } catch (InterruptedException e){
+                e.printStackTrace();
             }
-            int retVal = buffer.removeFirst();
-            notify();
-            return retVal;
-        } catch (InterruptedException e){
-            e.printStackTrace();
         }
-        return -1;
+        int retVal = buffer.removeFirst();
+        notify();
+        return retVal;
     }
 }
