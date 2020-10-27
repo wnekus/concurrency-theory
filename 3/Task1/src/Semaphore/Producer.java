@@ -6,6 +6,7 @@ public class Producer extends Thread {
     private int numberOfProductions;
     private int producerNumber;
 
+
     public Producer(BufferWithSemaphore buf, Semaphore semaphore, int numberOfProductions, int producerNumber){
         this.buf = buf;
         this.semaphore = semaphore;
