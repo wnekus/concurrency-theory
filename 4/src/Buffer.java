@@ -20,12 +20,12 @@ public class Buffer {
         this.consumersNumber = new AtomicInteger(consumersNumber);
     }
 
-    public void put(int numberOfProducts, int id){
+    public boolean put(int numberOfProducts, int id){
         lock.lock();
         try{
             while(maxSize - buffer.size() < numberOfProducts){
                 if(consumersNumber.get() == 0){
-                    return;
+                    return false;
                 }
                 notFull.await();
             }
@@ -38,14 +38,15 @@ public class Buffer {
         } finally {
             lock.unlock();
         }
+        return true;
     }
 
-    public void get(int numberOfConsumptions, int id){
+    public boolean get(int numberOfConsumptions, int id){
         lock.lock();
         try{
             while(buffer.size() < numberOfConsumptions){
                 if(producersNumber.get() == 0){
-                    return;
+                    return false;
                 }
                 notEmpty.await();
             }
@@ -58,6 +59,7 @@ public class Buffer {
         } finally {
             lock.unlock();
         }
+        return true;
     }
 
     public void decrementProducers() {
@@ -74,8 +76,8 @@ public class Buffer {
     public void decrementConsumers() {
         while(true) {
             int existingConsumersValue = consumersNumber.get();
-            int newValue = existingConsumersValue - 1;
-            if(consumersNumber.compareAndSet(existingConsumersValue, newValue)) {
+            int newConsumersValue = existingConsumersValue - 1;
+            if(consumersNumber.compareAndSet(existingConsumersValue, newConsumersValue)) {
                 notFull.signalAll();
                 return;
             }
