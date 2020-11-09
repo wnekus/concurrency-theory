@@ -39,7 +39,8 @@ public class Library {
         queue.release();
         numberOfReadingsSemaphore.release();
 
-        books.get((int)(Math.random() * books.size() - 1));
+       System.out.println( books.get((int)(Math.random() * books.size() - 1)));
+
 
         try{
             numberOfReadingsSemaphore.acquire();
