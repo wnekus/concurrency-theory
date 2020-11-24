@@ -1,8 +1,8 @@
-public class Servant implements IProxy {
+public class Proxy implements IProxy {
     Scheduler scheduler;
     Buffer buffer;
 
-    public Servant(Buffer buffer, Scheduler scheduler){
+    public Proxy(Buffer buffer, Scheduler scheduler){
         this.scheduler = scheduler;
         this.buffer = buffer;
     }
