@@ -1,0 +1,12 @@
+{
+  "name": "teoria-wspolbieznosci",
+  "description": "...",
+  "author": "Kamil Wnek",
+  "dependencies": {
+    "async": "3.2.x",
+    "q": "1.5.x",
+    "walkdir": "^0.4.1"
+  },
+  "engine": "node >= 14.15.x",
+  "type": "module"
+}
